@@ -1,0 +1,11 @@
+services:
+  web:
+    image: node:22
+    working_dir: /frontend
+    volumes:
+      - ./frontend:/frontend
+    tty: true
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    command: npm start
