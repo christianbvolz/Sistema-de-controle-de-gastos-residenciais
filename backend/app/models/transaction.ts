@@ -5,7 +5,7 @@ import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
 export default class Transaction extends BaseModel {
   @belongsTo(() => User)
-  declare User: BelongsTo<typeof User>
+  declare user: BelongsTo<typeof User>
 
   @column({ isPrimary: true })
   declare id: number

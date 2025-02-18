@@ -18,6 +18,7 @@ router
         router.post('/', [UsersController, 'create'])
         router.get('/', [UsersController, 'listAll'])
         router.get('/:userId', [UsersController, 'findById'])
+        router.delete('/:userId', [UsersController, 'deleteById'])
       })
       .prefix('users')
     router

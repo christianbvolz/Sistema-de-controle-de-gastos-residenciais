@@ -23,6 +23,10 @@ export default class UserController {
 
     const user = await this.userService.findById(userId)
 
+    if (!user) {
+      return response.status(StatusCodes.NOT_FOUND).json({ message: 'User not found' })
+    }
+
     return response.status(StatusCodes.OK).json(user)
   }
 
@@ -31,5 +35,14 @@ export default class UserController {
     const usersWithTransactions = await this.userService.listAll()
 
     return response.status(StatusCodes.OK).json(usersWithTransactions)
+  }
+  async deleteById({ request, response }: HttpContext) {
+    const {
+      params: { userId },
+    } = await request.validateUsing(FindUserByIdValidator)
+
+    await this.userService.deleteById(userId)
+
+    return response.status(StatusCodes.OK).json('user deleted')
   }
 }

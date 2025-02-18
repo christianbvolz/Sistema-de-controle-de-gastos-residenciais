@@ -16,6 +16,6 @@ export default class TransactionService {
   }
 
   async listAll() {
-    return await Transaction.all()
+    return await Transaction.query().select().preload('user')
   }
 }

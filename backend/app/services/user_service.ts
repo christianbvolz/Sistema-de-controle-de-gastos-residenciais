@@ -12,4 +12,9 @@ export default class UserService {
   async listAll() {
     return await User.query().select().preload('transactions')
   }
+
+  async deleteById(id: number) {
+    const user = await this.findById(id)
+    await user?.delete()
+  }
 }

@@ -1,0 +1,9 @@
+* {
+  text-align: center;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+.active {
+  font-weight: 700;
+}

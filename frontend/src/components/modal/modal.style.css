@@ -1,0 +1,19 @@
+.modal-container{
+  background-color: rgba(0,0,0,0.336);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.modal {
+  width: 50%;
+  height: 50%;
+  background-color: white;
+  border-radius: .4rem;
+  display: flex;  
+  flex-direction: column;
+  justify-content: space-between;
+}
