@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import Context from "../../context/context";
 import "./total.style.css"
+import { toFloat } from "../../utils";
 
 function Total() {
   const { userList } = useContext(Context);
@@ -20,9 +21,9 @@ function Total() {
     <>
       <div className="total-receita-despesa">
         <h2>Consulta de totais:</h2>
-        <h3>Total Receitas: {totalReceita}</h3>
-        <h3>Total Despesas: {totalDespesa}</h3>
-        <h3>Saldo Final: {saldoFinal}</h3>
+        <h3>Total Receitas: {toFloat(totalReceita)}</h3>
+        <h3>Total Despesas: {toFloat(totalDespesa)}</h3>
+        <h3>Saldo Final: {toFloat(saldoFinal)}</h3>
       </div>
     </>
   );
