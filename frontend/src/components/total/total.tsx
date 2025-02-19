@@ -1,22 +1,21 @@
-import { userlist } from "../../types/types";
+import { useContext } from "react";
+import Context from "../../context/context";
+import "./total.style.css"
 
-type totalProps = {
-  users: userlist[];
-};
+function Total() {
+  const { userList } = useContext(Context);
 
-function Total({ users }: totalProps) {
-  const totalArray = users.reduce(
-    (acc, { receitaTotal, despesaTotal }) => {
-      const somaReceita = acc[0] + receitaTotal;
-      const somaDespesa = acc[1] + despesaTotal;
-      const saldoFinal = acc[2] + (receitaTotal - despesaTotal);
-      return [somaReceita, somaDespesa, saldoFinal];
+  const [totalReceita, totalDespesa, saldoFinal] = userList.reduce(
+    (acc, { receita, despesa }) => {
+      const totalReceita = acc[0] + receita;
+      const totalDespesa = acc[1] + despesa;
+      const saldoFinal = acc[2] + (receita - despesa);
+
+      return [totalReceita, totalDespesa, saldoFinal];
     },
     [0, 0, 0]
   );
 
-  const [totalReceita, totalDespesa, saldoFinal] = totalArray;
-  
   return (
     <>
       <div className="total-receita-despesa">

@@ -11,9 +11,13 @@ function Modal({ formType, handleModal }: modalProps) {
   return (
     <div className="modal-container">
       <div className="modal">
-        <button onClick={handleModal}>Close</button>
-        {formType === "user" && <UserForm handleModal={handleModal}/>}
-        {formType === "transaction" && <TransactionForm handleModal={handleModal}/>}
+        <button className="close-btn" onClick={handleModal}>
+          Voltar
+        </button>
+        {formType === "user" && <UserForm handleModal={handleModal} />}
+        {formType === "transaction" && (
+          <TransactionForm handleModal={handleModal} />
+        )}
       </div>
     </div>
   );

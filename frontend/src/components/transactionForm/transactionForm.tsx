@@ -1,45 +1,39 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import "./transactionForm.style.css";
-import { createTransaction, listAllUsers } from "../../api/requests";
-import { user } from "../../types/types";
+import { createTransaction } from "../../api/requests";
 import {
   validateTransactionDescription,
   validateTransactionType,
   validateTransactionValue,
   validateUserId,
 } from "../../validations/validations";
+import Context from "../../context/context";
 
 type formProps = {
   handleModal: () => void;
 };
 
 function TransactionForm({ handleModal }: formProps) {
-  useEffect(() => {
-    const fetch = async () => {
-      const usersList = await listAllUsers();
-      setUsers(usersList);
-    };
+  const { userList, refreshTransactions, refreshUsers } = useContext(Context);
 
-    fetch();
-  }, []);
-
+  const [userId, setUserId] = useState(userList[0].id);
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
   const [type, setType] = useState<"despesa" | "receita">("despesa");
-  const [users, setUsers] = useState<user[]>([]);
-  const [userId, setUserId] = useState("1");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
     try {
+      event.preventDefault();
+
+      // Call the API to create a new user
       await createTransaction(description, +value, type, +userId);
-      setDescription("");
-      setValue("");
-      setType("despesa");
-      setUserId("1");
-      handleModal();
+
       alert("Transação cadastrada com sucesso!");
-      window.location.reload();
+
+      await refreshTransactions();
+      await refreshUsers();
+
+      handleModal();
     } catch (e: unknown) {
       alert("Precisa ser maior de 18 anos para cadastrar um receita!");
       console.log(e);
@@ -48,8 +42,8 @@ function TransactionForm({ handleModal }: formProps) {
 
   return (
     <>
-      <h1>Cadastro de Transações</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="transaction-form" onSubmit={handleSubmit}>
+        <h1>Cadastro de Transações</h1>
         <label>
           Descrição:
           <textarea
@@ -80,8 +74,12 @@ function TransactionForm({ handleModal }: formProps) {
         </label>
         <label>
           Pessoa:
-          <select onChange={({ target }) => setUserId(target.value)}>
-            {users.map((user) => (
+          <select
+            onChange={({ target }) =>
+              setUserId(target.value as unknown as number)
+            }
+          >
+            {userList.map((user) => (
               <option value={user.id} key={user.id}>
                 {user.name}
               </option>
@@ -90,6 +88,7 @@ function TransactionForm({ handleModal }: formProps) {
         </label>
 
         <button
+          className="form-btn"
           disabled={
             !(
               validateTransactionDescription(description) &&

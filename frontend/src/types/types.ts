@@ -1,22 +1,22 @@
-type user = {
+type User = {
   id: number;
   name: string;
   age: number;
   createdAt: Date;
   updatedAt: Date | null;
-  transactions: transaction[];
+  transactions: Transaction[];
 }
 
-type userlist = {
+type UserList = {
   id: number;
   name: string;
   age: number;
-  receitaTotal: number;
-  despesaTotal: number;
+  receita: number;
+  despesa: number;
   total: number;
 }
 
-type transaction = {
+type Transaction = {
   id: number;
   description: string;
   value: number;
@@ -24,11 +24,11 @@ type transaction = {
   userId: number;
   createdAt: Date;
   updatedAt: Date | null;
-  user: user;
+  user: User;
 }
 
 export type {
-  user,
-  userlist,
-  transaction
+  User,
+  UserList,
+  Transaction
 };

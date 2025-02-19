@@ -1,44 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext  } from "react";
 import Header from "../../components/header/header";
 import Total from "../../components/total/total";
 import trashIcon from "../../assets/trash.svg";
-import { deleteUser, listAllUsers } from "../../api/requests";
-import { userlist } from "../../types/types";
+import { deleteUser } from "../../api/requests";
 import "./userList.style.css";
-import { toFloat } from "../../utils";
+import Context from "../../context/context";
 
 function UserListPage() {
-  const [users, setUsers] = useState<userlist[]>([]);
-
-  useEffect(() => {
-    const fetch = async () => {
-      const allUsers = await listAllUsers();
-      const userlist = allUsers.map(({ id, name, age, transactions }) => {
-        let receitaTotal = 0;
-        let despesaTotal = 0;
-
-        transactions.forEach(({ value, type }) => {
-          if (type === "despesa") {
-            despesaTotal += +value;
-          } else {
-            receitaTotal += +value;
-          }
-        });
-        receitaTotal = toFloat(receitaTotal);
-        despesaTotal = toFloat(despesaTotal);
-        const total = toFloat(receitaTotal - despesaTotal);
-
-        return { id, name, age, receitaTotal, despesaTotal, total };
-      });
-      setUsers(userlist);
-    };
-
-    fetch();
-  }, []);
+  const { userList, refreshUsers, refreshTransactions } = useContext(Context);
 
   return (
     <div>
       <Header />
+      {/* Conditional rendering based on userList length */}
+      {userList.length === 0 ? (
+        <h1>Nenhuma pessoa cadastrada</h1>
+      ) : (
       <div className="user-list">
         <h2>Lista de Usuários</h2>
         <table>
@@ -47,26 +24,30 @@ function UserListPage() {
               <th>Nome</th>
               <th>Idade</th>
               <th>Receita</th>
-              <th>Despesas</th>
+              <th>Despesa</th>
               <th>Total</th>
               <th>Deletar Pessoa</th>
             </tr>
           </thead>
           <tbody>
-            {users.map(
-              ({ id, name, age, receitaTotal, despesaTotal, total }) => (
+            {/* Map through userList and render each user's data */}
+            {userList.map(
+              ({ id, name, age, receita, despesa, total }) => (
                 <tr key={id}>
                   <td>{name}</td>
                   <td>{age}</td>
-                  <td>{receitaTotal}</td>
-                  <td>{despesaTotal}</td>
+                  <td>{receita}</td>
+                  <td>{despesa}</td>
                   <td>{total}</td>
                   <td>
                     <button
                       className="delete-btn"
                       onClick={async () => {
+                        // Call deleteUser API and reload the page
                         await deleteUser(id);
-                        window.location.reload();
+                        
+                        await refreshUsers();
+                        await refreshTransactions();
                       }}
                     >
                       <img src={trashIcon} alt="test" />
@@ -77,8 +58,8 @@ function UserListPage() {
             )}
           </tbody>
         </table>
-        <Total users={users} />
-      </div>
+        <Total />
+      </div>)}
     </div>
   );
 }
