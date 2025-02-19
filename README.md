@@ -50,37 +50,37 @@ Este projeto é um sistema completo de controle de gastos residenciais, desenvol
 1. Navegue até o diretório do backend:
 
 ```bash
-  cd /backend
+cd backend
 ```
 
 2. Copie o arquivo de ambiente de exemplo e configure as variáveis:
 
 ```bash
-  cp .env.example .env
+cp .env.example .env
 ```
 
 3. Instale as dependências:
 
 ```bash
-  npm install
+npm install
 ```
 
 4. Inicie docker-compose:
 
 ```bash
-  docker-compose up -d
+docker-compose up -d
 ```
 
 5. Execute as migrações do banco de dados:
 
 ```bash
-  node ace migration:run
+node ace migration:run
 ```
 
 6. Inicie o servidor de desenvolvimento:
 
 ```bash
-  npm run dev
+npm run dev
 ```
 
 O backend estará rodando em `http://localhost:3333`.
@@ -90,25 +90,25 @@ O backend estará rodando em `http://localhost:3333`.
 1. Navegue até o diretório do frontend:
 
 ```bash
-  cd /frontend
+cd frontend
 ```
 
 2. Instale as dependências:
 
 ```bash
-  npm install
+npm install
 ```
 
 3. Copie o arquivo de ambiente de exemplo e configure as variáveis:
 
 ```bash
-  cp .env.example .env
+cp .env.example .env
 ```
 
 4. Inicie o servidor de desenvolvimento:
 
 ```bash
-  npm run dev
+npm run dev
 ```
 
 O frontend estará disponível em `http://localhost:5173`.
