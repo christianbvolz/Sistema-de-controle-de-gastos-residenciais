@@ -122,6 +122,18 @@ Após iniciar tanto o backend quanto o frontend, você pode acessar a aplicaçã
 3. Visualize a lista de usuários na página principal.
 4. Visualize a lista de transações na página de transações.
 
+## Gerenciamento de Banco de Dados com Adminer
+
+Este projeto inclui o Adminer, uma ferramenta completa de gerenciamento de banco de dados, na configuração do Docker Compose. O Adminer fornece uma interface web para gerenciar seu banco de dados MySQL.
+
+Para acessar o Adminer:
+1. Certifique-se de que seus contêineres Docker estão em execução.
+2. Abra seu navegador web e acesse `http://localhost:8080`.
+3. Faça login usando suas credenciais MySQL (servidor: mysql, nome de usuário e senha do seu arquivo .env).
+
+O Adminer permite que você gerencie facilmente seu banco de dados, execute consultas SQL e realize várias operações de banco de dados através de uma interface amigável.
+
+
 ## Estrutura do Projeto
 
 ```
